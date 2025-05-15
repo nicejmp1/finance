@@ -54,6 +54,7 @@ export const useSignUpForm = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        let hasErrors = false;
         Object.keys(formData).forEach(field => {
             const error = validateField(field as keyof FormData, formData[field as keyof FormData]);
             if (error) {
@@ -61,17 +62,16 @@ export const useSignUpForm = () => {
                     ...prev,
                     [field]: error
                 }));
+                hasErrors = true;
             }
-        })
+        });
 
-        const isFormComplete = Object.values(formData).every(value => value !== '');
-        if (!isFormComplete) {
-            setErrors(prev => ({
-                ...prev,
-                submit: '모든 필드를 입력해주세요'
-            }))
-            return;
-        }
+        if (hasErrors) return;
+
+        const emailExists = await checkDuplicate('email', formData.email);
+        const nicknameExists = await checkDuplicate('nickname', formData.nickname);
+
+        if (emailExists || nicknameExists) return;
 
         try {
             await signUp(formData);
@@ -79,8 +79,8 @@ export const useSignUpForm = () => {
         } catch (error: unknown) {
             setErrors(prev => ({
                 ...prev,
-                submit: error instanceof Error ? error.message : '회원가입에 실패했습니다. 다시 시도해주세요.'
-            }));    
+                submit: error instanceof Error ? error.message : '회원가입에 실패했습니다.'
+            }));
         }
     };
 
@@ -138,14 +138,22 @@ export const useSignUpForm = () => {
         return '';
     }
 
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const handleBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+        
         const error = validateField(name as keyof FormData, value);
-        setErrors(prev => ({
-            ...prev,
-            [name]: error || undefined
-        }));
-    }
+        if (error) {
+            setErrors(prev => ({
+                ...prev,
+                [name]: error
+            }));
+            return;
+        }
+
+        if ((name === 'email' || name === 'nickname') && value) {
+            await checkDuplicate(name as 'email' | 'nickname', value);
+        }
+    };
 
     const handleShowPassword = (field: 'password' | 'checkpassword') => {
         if (field === 'password') {
@@ -154,6 +162,33 @@ export const useSignUpForm = () => {
             setShowCheckPassword(!showCheckPassword);
         }
     }
+
+    const checkDuplicate = async (field: 'email' | 'nickname', value: string) => {
+        try {
+            const response = await fetch('/api/auth/check', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ field, value })
+            });
+
+            const data = await response.json();
+            
+            if (data.exists) {
+                setErrors(prev => ({
+                    ...prev,
+                    [field]: data.message
+                }));
+                return true;
+            }
+            return false;
+        } catch {
+            setErrors(prev => ({
+                ...prev,
+                [field]: '중복 확인 중 오류가 발생했습니다.'
+            }));
+            return true;
+        }
+    };
 
     return {
         formData,
