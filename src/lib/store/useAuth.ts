@@ -22,8 +22,11 @@ export const useAuth = create<AuthState>((set) => ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-      
-      if (!response.ok) throw new Error('회원가입에 실패했습니다');
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || '회원가입에 실패했습니다.');
+      }
       
       const user = await response.json();
       set({ user, error: null });
