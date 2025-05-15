@@ -1,44 +1,17 @@
 'use client';
-import { useState } from 'react';
-import { useAuth } from '@/lib/store/useAuth';
-
-interface FormData {
-    email: string;
-    password: string;
-}
-
-interface FormErrors {
-    email?: string;
-    password?: string;
-    submit?: string;
-}
+import { useLoginForm } from '@/hooks/auth/useLoginForm';
 
 export default function LoginForm() {
-    const { isLoading } = useAuth();
-    const [formData, setFormData] = useState<FormData>({
-        email: '',
-        password: '',
-    });
-
-    const [errors, setErrors] = useState<FormErrors>({});
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-
-        if (errors[name as keyof FormErrors]) {
-            setErrors(prev => ({
-                ...prev,
-                [name]: undefined
-            }))
-        }
-    }
+    const {
+        formData,
+        errors,
+        isLoading,
+        handleChange,
+        handleSubmit
+    } = useLoginForm();
     
     return (
-        <form action="">
+        <form onSubmit={handleSubmit} className='space-y-4'>
             <div>
                 <label htmlFor="id" className="block text-sm font-medium text-gray-700">아이디</label>
                 <input
