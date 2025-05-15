@@ -42,14 +42,25 @@ export default function Navigation() {
                     </div>
 
                     {/* 로그인 버튼은 별도로 분리 */}
-                    <Link
-                        href="/auth/login"
+                    <div className="flex space-x-4">
+                        <Link
+                            href="/auth/login"
                         className={`px-3 py-2 rounded-md ${
                             pathname === '/auth/login' ? 'bg-slate-600' : 'hover:bg-slate-700'
                         }`}
-                    >
-                        로그인
-                    </Link>
+                        >
+                            로그인
+                        </Link>
+
+                        <Link
+                            href="/auth/signup"
+                            className={`px-3 py-2 rounded-md ${
+                                pathname === '/auth/signup' ? 'bg-slate-600' : 'hover:bg-slate-700'
+                        }`}
+                        >
+                            회원가입
+                        </Link>
+                    </div>
                 </div>
             </div>
         </nav>
