@@ -5,12 +5,13 @@
 }
 
 .button-submit {
-    @apply w-full rounded-md bg-blue-500 px-4 py-2 text-white;
+    @apply w-full rounded-md bg-blue-500 px-4 py-2 text-white cursor-pointer;
 }
 
 .button-submit:hover {
-    @apply bg-blue-900 ;
+    @apply bg-blue-900;
 }
+
 .button-text {
     @apply text-sm text-gray-500;
 }
