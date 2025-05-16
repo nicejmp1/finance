@@ -28,7 +28,7 @@ export default async function Header() {
 
     return (
         <header className="bg-slate-800 shadow-md">
-            <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <nav className="container mx-auto px-4 sm:px-6 lg:px-4 h-16 flex items-center justify-between">
                 {/* 왼쪽: 네비게이션 메뉴 (서버에서 렌더링) */}
                 <div className="flex items-center gap-6">
                     <Link href="/" className="text-xl font-bold text-white">

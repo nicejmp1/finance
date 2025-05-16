@@ -135,7 +135,7 @@ export default function SignUpForm() {
             <button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full rounded-md bg-blue-500 px-4 py-2 text-white ${isLoading ? 'opacity-50 cursor-not-allowed' : 'opacity-100 cursor-pointer'}`}
+                className={`button-submit ${isLoading ? 'opacity-50 cursor-not-allowed' : 'opacity-100 cursor-pointer'}`}
             >
                 {isLoading ? '회원가입 중...' : '회원가입'}
             </button>

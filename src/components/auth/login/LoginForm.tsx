@@ -42,7 +42,7 @@ export default function LoginForm() {
                     <p className="mt-1 text-red-500 text-sm">{errors.password}</p>
                 )}
             </div>
-            
+    
             {errors.submit && (
                 <div className="mt-1 text-red-500 text-sm text-center">
                     {errors.submit}
@@ -51,10 +51,16 @@ export default function LoginForm() {
             <button
                 type="submit"
                 disabled={isLoading}
-                className={`mt-4 w-full rounded-md bg-blue-500 px-4 py-2 text-white ${isLoading ? 'opacity-50 cursor-not-allowed' : 'opacity-100 cursor-pointer'}`}
+                className={`button-submit ${isLoading ? 'opacity-50 cursor-not-allowed' : 'opacity-100 cursor-pointer'}`}
             >
                 {isLoading ? '로그인 중...' : '로그인'}
             </button>
+            
+            <div className='flex justify-center gap-1'>
+                <button className='button-text'>아이디 찾기</button>
+                <a className='text-sm text-gray-500 button-with-pipe'></a>
+                <button className='button-text'>비밀번호 찾기</button>
+            </div>
         </form>
     )
 }

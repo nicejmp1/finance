@@ -1,0 +1,20 @@
+.button-with-pipe::before {
+    content: "|";
+    color: #6b7280;
+    margin: 0 0.5rem;
+}
+
+.button-submit {
+    @apply w-full rounded-md bg-blue-500 px-4 py-2 text-white;
+}
+
+.button-submit:hover {
+    @apply bg-blue-900 ;
+}
+.button-text {
+    @apply text-sm text-gray-500;
+}
+
+.button-text:hover {
+    @apply text-gray-700 underline cursor-pointer;
+}
