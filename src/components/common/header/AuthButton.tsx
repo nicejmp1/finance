@@ -3,6 +3,7 @@
 import { useAuth } from '@/lib/store/useAuth';
 import { User } from '@/lib/types/auth';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 interface AuthButtonProps {
@@ -10,8 +11,9 @@ interface AuthButtonProps {
 }
 
 export function AuthButton({ initialUser }: AuthButtonProps) {
+    const router = useRouter();
     const { user, logout, initializeUser } = useAuth();
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (initialUser) {
@@ -19,16 +21,17 @@ export function AuthButton({ initialUser }: AuthButtonProps) {
         } else {
             initializeUser();
         }
-        setIsLoading(false);
+        setIsLoading(true);
     }, [initialUser, initializeUser]);
 
-    if (isLoading) {
+    if (!isLoading) {
         return null;
     }
 
     const handleLogout = async () => {
         try {
             await logout();
+            router.refresh();
         } catch (error) {
             console.error('로그아웃 중 오류 발생:', error);
         }

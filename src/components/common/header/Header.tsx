@@ -5,23 +5,25 @@ import Link from "next/link";
 export default async function Header() {
     
     let initialUser = null;
-    try {
-        const cookieStore = await cookies();
-        const session = cookieStore.get('session');
-        
-        if (session?.value && session.value !== "undefined") {
-            try {
-                const parsedValue = JSON.parse(session.value);
-                if (parsedValue && typeof parsedValue === 'object') {
-                    initialUser = parsedValue;
+    if (typeof window !== 'undefined') {
+        try {
+            const cookieStore = await cookies();
+            const session = cookieStore.get('session');
+
+            if (session?.value && session.value !== "undefined") {
+                try {
+                    const parsedValue = JSON.parse(session.value);
+                    if (parsedValue && typeof parsedValue === 'object') {
+                        initialUser = parsedValue;
+                    }
+                } catch (parseError) {
+                    console.error('Error parsing user data:', parseError);
+                    cookieStore.delete('session');
                 }
-            } catch (parseError) {
-                console.error('Error parsing user data:', parseError);
-                cookieStore.delete('session');
             }
+        } catch (error) {
+            console.error('Error fetching user:', error);
         }
-    } catch (error) {
-        console.error('Error fetching user:', error);
     }
 
     return (
