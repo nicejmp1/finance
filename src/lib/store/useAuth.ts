@@ -1,21 +1,25 @@
-import { create } from 'zustand';  
+import { create } from 'zustand';
 import { SignUpData, User, LoginData } from '../types/auth';
 
 interface AuthState {
   user: null | User;
   isLoading: boolean;
   error: string | null;
+  isPasswordReset: boolean;
+
   signUp: (data: SignUpData) => Promise<void>;
   login: (data: LoginData) => Promise<void>;
   logout: () => void;
   initializeUser: () => void;
+  resetPassword: (email: string) => Promise<void>;
 }
 
 export const useAuth = create<AuthState>((set) => ({
   user: null,
   isLoading: true,
   error: null,
-  
+  isPasswordReset: false,
+
   initializeUser: () => {
     if (typeof window !== 'undefined') {
       const savedUser = localStorage.getItem('user');
@@ -27,7 +31,7 @@ export const useAuth = create<AuthState>((set) => ({
           set({ user: null, isLoading: false });
         }
       } else {
-        set ({ isLoading: false })
+        set({ isLoading: false })
       }
     }
   },
@@ -45,7 +49,7 @@ export const useAuth = create<AuthState>((set) => ({
         const errorData = await response.json();
         throw new Error(errorData.error || '회원가입에 실패했습니다.');
       }
-      
+
       const user = await response.json();
       set({ user, error: null });
     } catch (error: unknown) {
@@ -72,7 +76,7 @@ export const useAuth = create<AuthState>((set) => ({
 
       document.cookie = `session=${JSON.stringify(responseData.session)}; path=/;`;
       localStorage.setItem('user', JSON.stringify(responseData.user));
-      set ({ user: responseData.user, error: null });
+      set({ user: responseData.user, error: null });
     } catch (error: unknown) {
       set({ error: error instanceof Error ? error.message : '알 수 없는 오류' });
       throw error;
@@ -99,6 +103,27 @@ export const useAuth = create<AuthState>((set) => ({
     } catch (error: unknown) {
       set({ error: error instanceof Error ? error.message : '알 수 없는 오류' });
     } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  resetPassword: async (email: string) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await fetch('/api/auth/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || '비밀번호 찾기에 실패했습니다.');
+      }
+
+      set({ isPasswordReset: true, error: null });
+    } catch (error: unknown) {
       set({ isLoading: false });
     }
   }
