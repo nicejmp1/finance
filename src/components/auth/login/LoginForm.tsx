@@ -42,6 +42,12 @@ export default function LoginForm() {
                     <p className="mt-1 text-red-500 text-sm">{errors.password}</p>
                 )}
             </div>
+            
+            {errors.submit && (
+                <div className="mt-1 text-red-500 text-sm text-center">
+                    {errors.submit}
+                </div>
+            )}
             <button
                 type="submit"
                 disabled={isLoading}

@@ -46,12 +46,16 @@ export const useAuth = create<AuthState>((set) => ({
         body: JSON.stringify(data)
       });
 
-      if (!response.ok) throw new Error('로그인에 실패했습니다');
+      const responseData = await response.json();
 
-      const user = await response.json();
-      set({ user, error: null });
+      if (!response.ok) {
+        throw new Error(responseData.error);
+      }
+
+      set ({ user: responseData.user, error: null });
     } catch (error: unknown) {
       set({ error: error instanceof Error ? error.message : '알 수 없는 오류' });
+      throw error;
     } finally {
       set({ isLoading: false });
     }
