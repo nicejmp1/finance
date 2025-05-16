@@ -96,7 +96,6 @@ export const useAuth = create<AuthState>((set) => ({
       localStorage.removeItem('user');
       set({ user: null, error: null });
 
-      window.location.href = '/';
     } catch (error: unknown) {
       set({ error: error instanceof Error ? error.message : '알 수 없는 오류' });
     } finally {
