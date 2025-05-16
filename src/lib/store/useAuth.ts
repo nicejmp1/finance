@@ -7,13 +7,31 @@ interface AuthState {
   error: string | null;
   signUp: (data: SignUpData) => Promise<void>;
   login: (data: LoginData) => Promise<void>;
+  logout: () => void;
+  initializeUser: () => void;
 }
 
 export const useAuth = create<AuthState>((set) => ({
   user: null,
-  isLoading: false,
+  isLoading: true,
   error: null,
   
+  initializeUser: () => {
+    if (typeof window !== 'undefined') {
+      const savedUser = localStorage.getItem('user');
+      if (savedUser) {
+        try {
+          const user = JSON.parse(savedUser);
+          set({ user, isLoading: false });
+        } catch {
+          set({ user: null, isLoading: false });
+        }
+      } else {
+        set ({ isLoading: false })
+      }
+    }
+  },
+
   signUp: async (data) => {
     set({ isLoading: true });
     try {
@@ -52,10 +70,35 @@ export const useAuth = create<AuthState>((set) => ({
         throw new Error(responseData.error);
       }
 
+      document.cookie = `session=${JSON.stringify(responseData.session)}; path=/;`;
+      localStorage.setItem('user', JSON.stringify(responseData.user));
       set ({ user: responseData.user, error: null });
     } catch (error: unknown) {
       set({ error: error instanceof Error ? error.message : '알 수 없는 오류' });
       throw error;
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  logout: async () => {
+    set({ isLoading: true });
+    try {
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        throw new Error('로그아웃에 실패했습니다.');
+      }
+
+      localStorage.removeItem('user');
+      set({ user: null, error: null });
+
+      window.location.href = '/';
+    } catch (error: unknown) {
+      set({ error: error instanceof Error ? error.message : '알 수 없는 오류' });
     } finally {
       set({ isLoading: false });
     }
