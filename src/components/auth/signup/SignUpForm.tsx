@@ -18,13 +18,13 @@ export default function SignUpForm() {
     return (
         <form onSubmit={handleSubmit} className='space-y-4'>
             <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">이메일</label>
+                <label htmlFor="email" className="label-text">이메일</label>
                 <input
                     type="email"
                     id="email"
                     name="email"
                     placeholder="이메일을 입력해주세요"
-                    className={`mt-2 block w-full rounded-md border ${errors.email ? 'border-red-500' : 'border-gray-300'} px-3 py-2`}
+                    className={`input-text ${errors.email ? 'border-red-500' : 'border-gray-300'} px-3 py-2`}
                     value={formData.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -34,14 +34,14 @@ export default function SignUpForm() {
                 )}
             </div>
             <div>
-                <label htmlFor="password" className='block text-sm font-medium text-gray-700 mt-2'>비밀번호</label>
+                <label htmlFor="password" className='label-text mt-2'>비밀번호</label>
                 <div className='relative'>
                     <input
                         type={showPassword ? 'text' : 'password'}
                         id="password"
                         name="password"
                         placeholder="비밀번호를 입력해주세요"
-                        className={`mt-2 block w-full rounded-md border ${errors.password ? 'border-red-500' : 'border-gray-300'} px-3 py-2 pr-10`}
+                        className={`input-text ${errors.password ? 'border-red-500' : 'border-gray-300'} px-3 py-2 pr-10`}
                         value={formData.password}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -64,14 +64,14 @@ export default function SignUpForm() {
                 )}
             </div>
             <div>
-                <label htmlFor="checkpassword" className='block text-sm font-medium text-gray-700 mt-2'>비밀번호 확인</label>
+                <label htmlFor="checkpassword" className='label-text mt-2'>비밀번호 확인</label>
                 <div className='relative'>
                     <input
                         type={showCheckPassword ? 'text' : 'password'}
                         id="checkpassword"
                         name="checkpassword"
                         placeholder="비밀번호를 입력해주세요"
-                        className={`mt-2 block w-full rounded-md border ${errors.checkpassword ? 'border-red-500' : 'border-gray-300'} px-3 py-2 pr-10`}
+                        className={`input-text ${errors.checkpassword ? 'border-red-500' : 'border-gray-300'} px-3 py-2 pr-10`}
                         value={formData.checkpassword}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -93,13 +93,13 @@ export default function SignUpForm() {
                 )}
             </div>
             <div>
-                <label htmlFor="nickname" className='block text-sm font-medium text-gray-700 mt-2'>닉네임</label>
+                <label htmlFor="nickname" className='label-text mt-2'>닉네임</label>
                 <input
                     type="text"
                     id="nickname"
                     name="nickname"
                     placeholder="닉네임을 입력해주세요"
-                    className={`mt-2 block w-full rounded-md border ${errors.nickname ? 'border-red-500' : 'border-gray-300'} px-3 py-2`}
+                    className={`input-text ${errors.nickname ? 'border-red-500' : 'border-gray-300'} px-3 py-2`}
                     value={formData.nickname}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -110,13 +110,13 @@ export default function SignUpForm() {
             </div>
 
             <div>
-                <label htmlFor="birthYear" className='block text-sm font-medium text-gray-700 mt-2'>생년월일</label>
+                <label htmlFor="birthYear" className='label-text mt-2'>생년월일</label>
                 <input
                     type="number"
                     id="birthYear"
                     name="birthYear"
                     placeholder="생년월일을 입력해주세요"
-                    className={`mt-2 block w-full rounded-md border ${errors.birthYear ? 'border-red-500' : 'border-gray-300'} px-3 py-2`}
+                    className={`input-text ${errors.birthYear ? 'border-red-500' : 'border-gray-300'} px-3 py-2`}
                     value={formData.birthYear}
                     onChange={handleChange}
                     onBlur={handleBlur}

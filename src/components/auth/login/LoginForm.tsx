@@ -1,5 +1,6 @@
 'use client';
 import { useLoginForm } from '@/hooks/auth/useLoginForm';
+import Link from 'next/link';
 
 export default function LoginForm() {
     const {
@@ -11,15 +12,16 @@ export default function LoginForm() {
     } = useLoginForm();
     
     return (
+        <>
         <form onSubmit={handleSubmit} className='space-y-4'>
             <div>
-                <label htmlFor="id" className="block text-sm font-medium text-gray-700">아이디</label>
+                <label htmlFor="id" className="label-text">아이디</label>
                 <input
                     type="email"
                     id="email"
                     name="email"
                     placeholder="이메일을 입력해주세요"
-                    className={`mt-2 block w-full rounded-md border ${errors.email ? 'border-red-500' : 'border-gray-300'} px-3 py-2`}
+                    className={`input-text ${errors.email ? 'border-red-500' : 'border-gray-300'} px-3 py-2`}
                     value={formData.email}
                     onChange={handleChange}
                 />
@@ -28,13 +30,13 @@ export default function LoginForm() {
                 )}
             </div>
             <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mt-2">비밀번호</label>
+                <label htmlFor="password" className="label-text mt-2">비밀번호</label>
                 <input
                     type="password"
                     id="password"
                     name="password"
                     placeholder="비밀번호를 입력해주세요"
-                    className={`mt-2 block w-full rounded-md border ${errors.password ? 'border-red-500' : 'border-gray-300'} px-3 py-2`}
+                    className={`input-text ${errors.password ? 'border-red-500' : 'border-gray-300'} px-3 py-2`}
                     value={formData.password}   
                     onChange={handleChange}
                 />
@@ -55,12 +57,12 @@ export default function LoginForm() {
             >
                 {isLoading ? '로그인 중...' : '로그인'}
             </button>
-            
-            <div className='flex justify-center gap-1'>
-                <button className='button-text'>아이디 찾기</button>
-                <a className='text-sm text-gray-500 button-with-pipe'></a>
-                <button className='button-text'>비밀번호 찾기</button>
-            </div>
         </form>
+        <div className='mt-4 flex justify-center gap-1'>
+            <Link href="/auth/find/id" className='button-text'>아이디 찾기</Link>
+            <a className='text-sm text-gray-500 button-with-pipe'></a>
+            <Link href="/auth/find/password" className='button-text'>비밀번호 찾기</Link>
+        </div>
+        </>
     )
 }
