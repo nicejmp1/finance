@@ -1,7 +1,7 @@
 // src/app/layout.tsx
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Navigation from '@/components/ui/Navigation'
+import Header from '@/components/common/header/Header'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,7 +13,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={inter.className}>
-        <Navigation />
+        <Header />
         <main className="min-h-screen bg-gray-50">
           {children}
         </main>
