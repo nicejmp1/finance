@@ -1,6 +1,7 @@
-'use client';
+import LoginForm from '@/components/auth/login/LoginForm';  
+import { getPageMetadata } from '@/lib/metadata';
 
-import LoginForm from '@/components/auth/login/LoginForm';    
+export const metadata = getPageMetadata('login');
 
 export default function LoginPage() {
     return (

@@ -1,3 +1,7 @@
+import { getPageMetadata } from '@/lib/metadata';
+
+export const metadata = getPageMetadata('transaction');
+
 export default function TransactionPage() {
     return (
         <div className="container mx-auto p-4">

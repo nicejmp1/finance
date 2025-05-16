@@ -1,4 +1,7 @@
-// src/app/dashboard/page.tsx
+import { getPageMetadata } from '@/lib/metadata';
+
+export const metadata = getPageMetadata('dashboard');
+
 export default function DashboardPage() {
   return (
     <div className="container mx-auto p-4">

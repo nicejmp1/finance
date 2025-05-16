@@ -1,6 +1,7 @@
-'use client';
-
 import SignUpForm from '@/components/auth/signup/SignUpForm';
+import { getPageMetadata } from '@/lib/metadata';
+
+export const metadata = getPageMetadata('signup');
 
 export default function SignUpPage() {
     return (
