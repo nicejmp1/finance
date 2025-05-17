@@ -47,6 +47,10 @@ export const useLoginForm = () => {
                     return '올바른 이메일 형식이 아닙니다.';
                 }
                 break;
+            case 'password':
+                if (!value) {
+                    return '비밀번호를 입력해주세요';
+                }
         }
     }   
 
