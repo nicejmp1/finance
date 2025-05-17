@@ -97,8 +97,8 @@ export const useSignUpForm = () => {
             case 'password':
                 if (!value) {
                     return '비밀번호를 입력해주세요';
-                } else if (value.length > 6 && value.length < 12) {
-                    return '비밀번호는 6~12자 사이로 입력해주세요';
+                } else if (value.length > 6 && value.length < 16) {
+                    return '비밀번호는 6~16자 사이로 입력해주세요';
                 } else if (!/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value)) {
                     return '비밀번호는 영문, 숫자, 특수문자를 포함해야 합니다.';
                 }

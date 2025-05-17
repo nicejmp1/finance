@@ -13,6 +13,11 @@ interface FormErrors {
     submit?: string;
 }
 
+interface PasswordValidation {
+    isValid: boolean;
+    message?: string;
+}
+
 export const useResetPwForm = () => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -23,9 +28,11 @@ export const useResetPwForm = () => {
     const router = useRouter();
     const token = searchParams.get('token');
     const { resetPassword } = useAuth();
-
+    
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsLoading(true);
+        setError('');
 
         if (newPassword !== confirmPassword) {
             setError('비밀번호가 일치하지 않습니다.');
@@ -38,6 +45,31 @@ export const useResetPwForm = () => {
         }
 
         try {
+            const checkResponse = await fetch('/api/auth/check-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    token,
+                    newPassword,
+                })
+            });
+
+            const checkData = await checkResponse.json();
+
+            if (!checkResponse.ok) {
+                if (checkData.error === 'SAME_PASSWORD') {
+                    setError(checkData.message);
+                    return;
+                }
+                if (checkData.error === 'INVALID_PASSWORD') {
+                    setError(checkData.message);
+                    return;
+                }
+                throw new Error(checkData.error);
+            }
+
             await resetPassword(token, newPassword);
             router.push('/auth/login?message=password-reset-success');
         } catch (error) {
