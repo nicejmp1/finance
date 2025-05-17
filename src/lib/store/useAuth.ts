@@ -11,7 +11,7 @@ interface AuthState {
   login: (data: LoginData) => Promise<void>;
   logout: () => void;
   initializeUser: () => void;
-  resetPassword: (email: string) => Promise<void>;
+  findPassword: (email: string) => Promise<void>;
 }
 
 export const useAuth = create<AuthState>((set) => ({
@@ -107,7 +107,7 @@ export const useAuth = create<AuthState>((set) => ({
     }
   },
 
-  resetPassword: async (email: string) => {
+  findPassword: async (email: string) => {
     set({ isLoading: true, error: null });
     try {
       const response = await fetch('/api/auth/find-password', {
