@@ -14,7 +14,7 @@ export const useFindPwForm = () => {
         isLoading,
         error,
         isPasswordReset,
-        resetPassword
+        findPassword
     } = useAuth();
 
     const validateEmail = (email: string) => {
@@ -39,7 +39,7 @@ export const useFindPwForm = () => {
         setErrors({});
 
         try {
-            await resetPassword(email);
+            await findPassword(email);
             if (error) {
                 setErrors({ submit: error });
             }
