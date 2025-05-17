@@ -47,7 +47,7 @@ export default function ResetPasswordForm() {
                 <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
+                    className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 disabled:bg-gray-400 cursor-pointer"
                 >
                     {isLoading ? '처리 중...' : '비밀번호 변경'}
                 </button>
