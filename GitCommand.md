@@ -97,5 +97,21 @@ git commit -m "merge: main 브랜치 병합 충돌 해결"
 ```
 
 ```
+# 1. 현재 상태 확인
+git status
+
+# 2. 변경사항이 있다면 커밋
+git add .
+git commit -m "feat: 현재 작업 내용"
+
+# 3. pull 받기
+git pull origin main
+
+# 4. 충돌이 있다면 해결 후
+git add .
+git commit -m "merge: 충돌 해결"
+
+# 5. push
+git push origin main
 
 ```
