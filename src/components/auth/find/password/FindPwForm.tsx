@@ -8,9 +8,10 @@ export default function FindPwForm() {
         email,
         setEmail,
         isLoading,
-        error,
+        errors,
         isPasswordReset,
-        handleSubmit
+        handleSubmit,
+        handleChange
     } = useFindPwForm();
 
     if (isPasswordReset) {
@@ -43,11 +44,12 @@ export default function FindPwForm() {
                     placeholder="이메일을 입력해주세요"
                     className={`input-text px-3 py-2`}
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={handleChange}
                     disabled={isLoading}
                 />
-                {error && <p className="mt-1 text-red-500 text-sm">{error}</p>}
+                {errors.email && <p className="mt-1 text-red-500 text-sm">{errors.email}</p>}
             </div>
+            {errors.submit && <p className="mt-1 text-red-500 text-sm">{errors.submit}</p>}
             <button
                 type="submit"
                 className="button-submit"

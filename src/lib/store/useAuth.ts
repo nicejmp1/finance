@@ -110,7 +110,7 @@ export const useAuth = create<AuthState>((set) => ({
   resetPassword: async (email: string) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await fetch('/api/auth/reset-password', {
+      const response = await fetch('/api/auth/find-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
