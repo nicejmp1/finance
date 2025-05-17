@@ -11,7 +11,8 @@ interface AuthState {
   login: (data: LoginData) => Promise<void>;
   logout: () => void;
   initializeUser: () => void;
-  findPassword: (email: string) => Promise<void>;
+  findPassword: (email: string) => Promise<void>; 
+  resetPassword: (token: string, newPassword: string) => Promise<void>;
 }
 
 export const useAuth = create<AuthState>((set) => ({
@@ -125,6 +126,34 @@ export const useAuth = create<AuthState>((set) => ({
       set({ isPasswordReset: true, error: null });
     } catch (error: unknown) {
       set({ isLoading: false });
+    }
+  },
+
+  resetPassword: async (token: string, newPassword: string) => {
+    set({ isLoading: true, error: null});
+    try {
+      const response = await fetch('/api/auth/reset-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          token,
+          newPassword,
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || '비밀번호 재설정에 실패했습니다.');
+      }
+      return data;
+    } catch (error) {
+      set ({ error: error instanceof Error ? error.message : '알 수 없는 오류' });
+      throw error;
+    } finally {
+      set ({ isLoading: false });
     }
   }
 }));

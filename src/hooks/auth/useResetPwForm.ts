@@ -22,6 +22,7 @@ export const useResetPwForm = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
     const token = searchParams.get('token');
+    const { resetPassword } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -31,25 +32,13 @@ export const useResetPwForm = () => {
             return;
         }
 
-        setIsLoading(true);
+        if (!token) {
+            setError('유효하지 않은 토큰입니다.');
+            return;
+        }
+
         try {
-            const response = await fetch('/api/auth/reset-password', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    token,
-                    newPassword,
-                }),
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.error || '비밀번호 재설정에 실패했습니다.');   
-            }
-
+            await resetPassword(token, newPassword);
             router.push('/auth/login?message=password-reset-success');
         } catch (error) {
             setError(error instanceof Error ? error.message : '비밀번호 재설정에 실패했습니다.');
