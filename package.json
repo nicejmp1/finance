@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/nodemailer": "^6.4.17",
     "await": "^0.2.6",
     "bcryptjs": "^3.0.2",
     "mongodb": "^6.16.0",
     "next": "15.3.2",
+    "nodemailer": "^7.0.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
