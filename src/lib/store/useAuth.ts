@@ -125,7 +125,7 @@ export const useAuth = create<AuthState>((set) => ({
 
       set({ isPasswordReset: true, error: null });
     } catch (error: unknown) {
-      set({ isLoading: false });
+      set({ isLoading: false, error: error instanceof Error ? error.message : '알 수 없는 오류' });
     }
   },
 
