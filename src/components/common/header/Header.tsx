@@ -1,6 +1,8 @@
 import { AuthButton } from "./AuthButton";
 import { cookies } from "next/headers";
-import Link from "next/link";
+import { FaMoon } from "react-icons/fa6";
+import { FaGithub } from "react-icons/fa";
+import Link from "next/link";   
 
 export default async function Header() {
     
@@ -27,28 +29,44 @@ export default async function Header() {
     }
 
     return (
-        <header className="bg-slate-800 shadow-md">
+        <header className="bg-gradient-to-r from-purple-600 to-blue-600 shadow-md">
             <nav className="container mx-auto px-4 sm:px-6 lg:px-4 h-16 flex items-center justify-between">
                 {/* 왼쪽: 네비게이션 메뉴 (서버에서 렌더링) */}
                 <div className="flex items-center gap-6">
-                    <Link href="/" className="text-xl font-bold text-white">
-                        Finance App
+                    <Link href="/" className="text-xl font-bold text-white hover:text-gray-200 transition-colors">
+                        UI/UX ShowCase
                     </Link>
                     <div className="flex items-center gap-4">
-                        <Link href="/dashboard" className="text-white hover:text-gray-900">
-                            대시보드
+                        <Link href="/components" className="text-white hover:text-gray-100 transition-colors">
+                            Components
                         </Link>
-                        <Link href="/transactions" className="text-white hover:text-gray-900">
-                            거래내역
+                        <Link href="/layouts" className="text-white hover:text-gray-100 transition-colors">
+                            Layouts
                         </Link>
-                        <Link href="/budget" className="text-white hover:text-gray-900">
-                            예산관리
+                        <Link href="/animations" className="text-white hover:text-gray-100 transition-colors">
+                            Animations
                         </Link>
                     </div>
                 </div>
 
                 {/* 오른쪽: 인증 버튼 (클라이언트에서 렌더링) */}
-                <AuthButton initialUser={initialUser} />
+                <div className="flex items-center gap-3">
+                    <button 
+                        className="px-2 py-2 rounded-full bg-white text-white hover:bg-white/20 transition-colors cursor-pointer"
+                        aria-label="테마 변경"    
+                    >
+                        <FaMoon className="w-6 h-6 text-amber-500" />
+                    </button>
+                    <a 
+                        href="https://github.com/nicejmp1"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-2 py-2 rounded-full bg-white text-white hover:bg-white/20 transition-colors"
+                        >
+                        <FaGithub className="w-6 h-6 text-black" />
+                    </a>
+                    <AuthButton initialUser={initialUser}/>
+                </div>
             </nav>
         </header>
     )
