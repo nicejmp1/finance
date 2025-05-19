@@ -2,10 +2,10 @@ import { Metadata } from "next";
 
 export const defaultMetadata: Metadata = {
     title: {
-        template: 'Finance App | %s',
-        default: 'Finance App',
+        template: 'UI/UX Showcase | %s',
+        default: 'UI/UX Showcase',
     },
-    description: 'Finance App',
+    description: '모던 UI 컴포넌트 모음',
 }
 
 export const pageMetadata: Record<string, Metadata> = {
