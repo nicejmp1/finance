@@ -38,9 +38,9 @@ export function AuthButton({ initialUser }: AuthButtonProps) {
     };
 
     return (
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 pl-2">
             {user ? (
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
                     <span className="text-white">
                         {user.nickname}님 환영합니다
                     </span>
@@ -52,7 +52,7 @@ export function AuthButton({ initialUser }: AuthButtonProps) {
                     </button>
                 </div>
             ) : (
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2">
                         <Link href="/auth/login/" className="text-sm px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600">
                             로그인
                         </Link>
